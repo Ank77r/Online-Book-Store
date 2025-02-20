@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue Page</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #e0f7fa;
+            overflow: hidden;
+            position: relative;
+            color: #333;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            color: #00796b;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 20px;
+            text-transform: uppercase;
+            animation: floatIn 0.5s ease-out;
+        }
+
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.9);
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            animation: fadeIn 0.7s ease-out;
+        }
+
+        th, td {
+            border: 1px solid #b2dfdb;
+            padding: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        th {
+            background-color: #00796b;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        th:hover, td:hover {
+            transform: scale(1.02);
+        }
+
+        img {
+            width: 80px;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            animation: floatIn 1s ease-out;
+            cursor: pointer;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-button, .home-button {
+            background: #00796b;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: floatIn 1.2s ease-out;
+        }
+
+        .cart-button:hover, .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 121, 107, 0.7);
+        }
+
+        .button-container {
+            margin-top: 20px;
+            animation: floatIn 1.3s ease-out;
+        }
+
+        .neon-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00796b;
+            text-shadow: 0 0 10px #00796b;
+            animation: floatIn 0.9s ease-out;
+        }
+
+        .info-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            animation: fadeIn 0.5s ease-out;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .info-modal img {
+            width: 150px;
+            height: auto;
+            float: left;
+            margin-right: 20px;
+            border-radius: 8px;
+        }
+
+        .info-modal .close {
+            cursor: pointer;
+            float: right;
+            font-size: 24px;
+            margin-top: -10px;
+        }
+
+    </style>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": { "value": "#999999" },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.4
+                },
+                "size": {
+                    "value": 3,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#999999",
+                    "opacity": 0.3,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2
+                }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    }
+                }
+            }
+        });
+
+        function addToCart(title, author, price, image) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let existingBook = cart.find(book => book.title === title);
+
+            if (existingBook) {
+                existingBook.quantity += 1;
+            } else {
+                cart.push({ title, author, price, image, quantity: 1 });
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            // Redirect to cart page immediately
+            window.location.href = "cart.html";
+        }
+
+        function showProductInfo(title, author, publication, description, image) {
+            const modal = document.getElementById('info-modal');
+            modal.innerHTML = `
+                <span class="close" onclick="closeModal()">&times;</span>
+                <img src="${image}" alt="${title}">
+                <h3>${title}</h3>
+                <p><strong>Author:</strong> ${author}</p>
+                <p><strong>Publication:</strong> ${publication}</p>
+                <p>${description}</p>
+            `;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('info-modal').style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="container">
+        <div class="header">Book Catalogue</div>
+        <table>
+            <tr>
+                <th>Course</th>
+                <th>Book Title</th>
+                <th>Details</th>
+                <th>Price</th>
+                <th>Cart</th>
+            </tr>
+            <tr>
+                <td>CSE</td>
+                <td><img src="../../Images/xmlbible.jpg" alt="XML Bible" onclick="showProductInfo('XML Bible', 'Winston', 'Wiley', 'A comprehensive guide to XML, covering both fundamental concepts and advanced techniques.', '../../Images/xmlbible.jpg')"></td>
+                <td><strong>XML Bible</strong><br>Author: Winston<br>Publication: Wiley</td>
+                <td>$40.5</td>
+                <td><button class="cart-button" onclick="addToCart('XML Bible', 'Winston', 40.5, '../../Images/xmlbible.jpg')">Add to Cart</button></td>
+            </tr>
+            <tr>
+                <td>ECE</td>
+                <td><img src="../../Images/ai.jpg" alt="AI" onclick="showProductInfo('AI', 'S. Russl', 'Princetonhall', 'An in-depth exploration of artificial intelligence concepts, algorithms, and applications.', '../../Images/ai.jpg')"></td>
+                <td><strong>AI</strong><br>Author: S. Russl<br>Publication: Princetonhall</td>
+                <td>$63</td>
+                <td><button class="cart-button" onclick="addToCart('AI', 'S. Russl', 63, '../../Images/ai.jpg')">Add to Cart</button></td>
+            </tr>
+            <tr>
+                <td>EEE</td>
+                <td><img src="../../Images/java 2.jpg" alt="JAVA" onclick="showProductInfo('JAVA', 'L. Jessup', 'Pearson')"></td>
+                <td><strong>JAVA</strong><br>Author: L. Jessup<br>Publication: Pearson</td>
+                <td>$38</td>
+                <td><button class="cart-button" onclick="addToCart('JAVA', 'L. Jessup', 38, '../../Images/java 2.jpg')">Add to Cart</button></td>
+            </tr>
+            <tr>
+                <td>ME</td>
+                <td><img src="../../Images/html in 24 hours.jpg" alt="HTML" onclick="showProductInfo('HTML', 'Ross & Wilson', 'Elsevier')"></td>
+                <td><strong>HTML</strong><br>Author: Ross & Wilson<br>Publication: Elsevier</td>
+                <td>$45</td>
+                <td><button class="cart-button" onclick="addToCart('HTML', 'Ross & Wilson', 45, '../../Images/html in 24 hours.jpg')">Add to Cart</button></td>
+            </tr>
+        </table>
+
+        <!-- Home Button -->
+        <div class="button-container">
+            <button class="home-button" onclick="window.location.href='index.html'">Go to Home</button>
+        </div>
+    </div>
+</body>
+</html>

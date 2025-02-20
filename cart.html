@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags and Title -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Cart Page with 'Add to Cart' Feature</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- Styles -->
+    <style>
+        /* Root Variables */
+        :root {
+            --primary-color: #4CAF50; /* Green */
+            --secondary-color: #FF9800; /* Orange */
+            --accent-color: #2196F3; /* Blue */
+            --error-color: #F44336; /* Red */
+            --text-color: #333;
+            --background-color: #F5F5F5;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Styles */
+        .section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .section-header {
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        .section-header h3 {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Cart Table */
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .cart-table th, .cart-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-table th {
+            background-color: #f9f9f9;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        .cart-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .product-image {
+            width: 80px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .product-image:hover {
+            transform: scale(1.1);
+        }
+
+        /* Quantity Controls */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .quantity-btn {
+            background-color: var(--secondary-color);
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+        .quantity-btn:hover {
+            background-color: #e68a00;
+        }
+
+        /* Save for Later */
+        .save-for-later {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        .save-for-later i {
+            margin-right: 5px;
+        }
+        .save-for-later:hover {
+            color: #1976D2;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .order-summary p {
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .order-summary h4 {
+            font-size: 22px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+
+        /* Forms and Inputs */
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .form-group input[type="text"] {
+            flex: 1 1 250px;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        .form-group input[type="text"]:hover {
+            border-color: var(--accent-color);
+            background-color: #f0f8ff;
+        }
+        .form-group input[type="text"]:focus {
+            border-color: var(--primary-color);
+            background-color: #e8f5e9;
+            outline: none;
+        }
+        .form-group button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .form-group button i {
+            margin-right: 8px;
+        }
+        .form-group button:hover {
+            background-color: #388E3C;
+        }
+
+        /* Buttons */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .button-container button {
+            flex: 1 1 30%;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #fff;
+            transition: background-color 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .button-container button i {
+            margin-right: 8px;
+        }
+        .button-container button:hover {
+            transform: translateY(-2px);
+        }
+        .continue-shopping {
+            background-color: var(--accent-color);
+        }
+        .continue-shopping:hover {
+            background-color: #1976D2;
+        }
+        .clear-cart {
+            background-color: var(--error-color);
+        }
+        .clear-cart:hover {
+            background-color: #D32F2F;
+        }
+        .checkout-button {
+            background-color: var(--primary-color);
+        }
+        .checkout-button:hover {
+            background-color: #388E3C;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+            z-index: 1000;
+        }
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            .cart-table th, .cart-table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+            .product-image {
+                width: 60px;
+            }
+            .button-container button {
+                flex: 1 1 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cart Items Section -->
+        <div class="section cart-section">
+            <div class="section-header">
+                <h3>Your Shopping Cart</h3>
+            </div>
+            <table id="cartTable" class="cart-table">
+                <!-- Cart items will be dynamically generated -->
+            </table>
+        </div>
+
+        <!-- Order Summary Section -->
+        <div class="section order-summary-section">
+            <div class="section-header">
+                <h3>Order Summary</h3>
+            </div>
+            <div class="order-summary">
+                <p>Subtotal: <span>$<span id="cartTotal">0.00</span></span></p>
+                <p>You Save: <span>$<span id="savings">0.00</span></span></p>
+                <p>Tax (8%): <span>$<span id="taxAmount">0.00</span></span></p>
+                <p>Shipping: <span>$<span id="shippingCost">0.00</span></span></p>
+                <h4>Total: <span>$<span id="grandTotal">0.00</span></span></h4>
+            </div>
+        </div>
+
+        <!-- Coupon Code Section -->
+        <div class="section coupon-section">
+            <div class="section-header">
+                <h3>Have a Coupon?</h3>
+            </div>
+            <div class="form-group">
+                <input type="text" id="couponCode" placeholder="Enter coupon code">
+                <button onclick="applyCoupon()"><i class="fas fa-tag"></i> Apply Coupon</button>
+            </div>
+        </div>
+
+        <!-- Shipping Estimation Section -->
+        <div class="section shipping-section">
+            <div class="section-header">
+                <h3>Estimate Shipping</h3>
+            </div>
+            <div class="form-group">
+                <input type="text" id="zipCode" placeholder="Enter zip code">
+                <button onclick="estimateShipping()"><i class="fas fa-truck"></i> Estimate Shipping</button>
+            </div>
+        </div>
+
+        <!-- Buttons Section -->
+        <div class="button-container">
+            <button class="continue-shopping" onclick="window.location.href='catalogue.html'"><i class="fas fa-arrow-left"></i> Continue Shopping</button>
+            <button class="clear-cart" onclick="clearCart()"><i class="fas fa-trash-alt"></i> Clear Cart</button>
+            <button class="checkout-button" onclick="proceedToCheckout()"><i class="fas fa-credit-card"></i> Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Scripts -->
+    <script>
+        // Sample products data (Replace with your actual data or fetch from server)
+        const products = [
+            { id: 1, title: 'Book Title One', author: 'Author One', price: 19.99, image: 'images/book1.jpg' },
+            { id: 2, title: 'Book Title Two', author: 'Author Two', price: 24.99, image: 'images/book2.jpg' },
+            // Add more products as needed
+        ];
+
+        // Function to add product to cart
+        function addToCart(productId) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const product = products.find(p => p.id === productId);
+
+            if (product) {
+                const cartItemIndex = cart.findIndex(item => item.id === productId);
+                if (cartItemIndex > -1) {
+                    cart[cartItemIndex].quantity += 1;
+                } else {
+                    cart.push({ ...product, quantity: 1 });
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartDisplay();
+                showNotification('Product added to cart!');
+            }
+        }
+
+        // Function to display cart items
+        function updateCartDisplay() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let cartTable = document.getElementById('cartTable');
+            let totalAmount = 0;
+
+            cartTable.innerHTML = `
+                <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+            `;
+
+            cart.forEach((item, index) => {
+                totalAmount += item.price * item.quantity;
+                let row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${item.image}" class="product-image" alt="${item.title}"></td>
+                    <td>${item.title}</td>
+                    <td>${item.author}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">−</button>
+                        ${item.quantity}
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                    </td>
+                    <td>
+                        <button class="save-for-later" onclick="saveForLater(${index})"><i class="fas fa-heart"></i> Save for Later</button>
+                    </td>
+                `;
+                cartTable.appendChild(row);
+            });
+
+            document.getElementById('cartTotal').textContent = totalAmount.toFixed(2);
+            updateOrderSummary();
+        }
+
+        function updateQuantity(index, change) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart[index]) {
+                cart[index].quantity += change;
+
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartDisplay();
+            }
+        }
+
+        function clearCart() {
+            localStorage.removeItem('cart');
+            updateCartDisplay();
+            showNotification('Cart has been cleared.');
+        }
+
+        // Apply Coupon Codes
+        let discount = 0;
+        function applyCoupon() {
+            const couponCode = document.getElementById('couponCode').value.trim();
+            if (couponCode === 'SAVE10') {
+                discount = 0.10;
+                showNotification('Coupon applied! You saved 10%');
+            } else if (couponCode === 'SAVE20') {
+                discount = 0.20;
+                showNotification('Coupon applied! You saved 20%');
+            } else {
+                discount = 0;
+                showNotification('Invalid coupon code.');
+            }
+            updateOrderSummary();
+        }
+
+        // Estimated Shipping and Taxes
+        let shippingCost = 0;
+        let taxRate = 0.08;
+        function estimateShipping() {
+            const zipCode = document.getElementById('zipCode').value.trim();
+            if (zipCode) {
+                shippingCost = 5.00;
+                showNotification(`Shipping estimated for zip code ${zipCode}`);
+            } else {
+                shippingCost = 0;
+                showNotification('Please enter a valid zip code.');
+            }
+            updateOrderSummary();
+        }
+
+        function updateOrderSummary() {
+            let cartTotal = parseFloat(document.getElementById('cartTotal').textContent) || 0;
+            let savings = cartTotal * discount;
+            let discountedTotal = cartTotal - savings;
+            let taxAmount = discountedTotal * taxRate;
+            let grandTotal = discountedTotal + taxAmount + shippingCost;
+
+            document.getElementById('savings').textContent = savings.toFixed(2);
+            document.getElementById('taxAmount').textContent = taxAmount.toFixed(2);
+            document.getElementById('shippingCost').textContent = shippingCost.toFixed(2);
+            document.getElementById('grandTotal').textContent = grandTotal.toFixed(2);
+        }
+
+        // Save for Later/Wishlist
+        function saveForLater(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+            if (cart[index]) {
+                wishlist.push(cart[index]);
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                updateCartDisplay();
+                // Update wishlist display if implemented
+                showNotification('Item moved to wishlist.');
+            }
+        }
+
+        // Proceed to Checkout
+        function proceedToCheckout() {
+            // Implement your checkout logic here
+            showNotification('Proceeding to checkout...');
+        }
+
+        // Notification Function
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartDisplay();
+            // Call updateWishlistDisplay() if you implement the wishlist display
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            color: #fff;
+            scroll-behavior: smooth;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #f0f0f0;
+        }
+
+        .segment {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+
+        #particles-segment {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .cuboidal-bar {
+            width: 81%;
+            max-width: 1080px;
+            height: 525px;
+            background: rgba(204, 229, 255, 0.6);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(204, 229, 255, 0.8);
+            display: flex;
+            align-items: center;
+            padding: 50px;
+            color: #333;
+            z-index: 1;
+            font-size: 1.2em;
+            font-weight: 400;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content {
+            animation: float-in 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes float-in {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .team-section {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            text-align: center;
+            margin: 50px auto;
+            max-width: 600px;
+            color: #333;
+        }
+
+        .team-section h2 {
+            margin-bottom: 20px;
+        }
+
+        .team-member {
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .team-member-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .team-member .arrow {
+            transition: transform 0.3s;
+        }
+
+        .team-member .arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .contact-info {
+            display: none;
+            margin-top: 10px;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease;
+        }
+
+        .contact-info.open {
+            display: block;
+            max-height: 100px;
+            opacity: 1;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .icon {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="segment">
+        <div id="particles-segment"></div>
+        <div class="cuboidal-bar">
+            <div class="content">
+                <h2>About Us</h2>
+                <p>A prototype project for a college assignment dedicated towards showcasing a user-friendly website with modern UI and design for ease of purchasing books online. This project aims to demonstrate the integration of advanced web technologies to create an intuitive and efficient online bookstore experience.</p>
+                <a href="#team" class="button">Team Members</a>
+            </div>
+        </div>
+    </div>
+    <div id="team" class="team-section">
+        <h2>Our Team</h2>
+        <div class="team-member">
+            <div class="team-member-header">
+                Ankur Pandey - 03025502722
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="contact-info">
+                <a href="https://github.com/Ank77r"><img src="https://image.flaticon.com/icons/png/512/25/25231.png" alt="GitHub" width="24" height="24" class="icon"></a>
+                <a href="https://www.linkedin.com/feed/"><img src="https://image.flaticon.com/icons/png/512/174/174857.png" alt="LinkedIn" width="24" height="24" class="icon"></a>
+            </div>
+        </div>
+        <div class="team-member">
+            <div class="team-member-header">
+                Aman Singh Chauhan - 01325502722
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="contact-info">
+                <a href="https://github.com/Aman-001"><img src="https://image.flaticon.com/icons/png/512/25/25231.png" alt="GitHub" width="24" height="24" class="icon"></a>
+                <a href="https://www.linkedin.com/in/aman-singh-chauhan-4b3baa263/"><img src="https://image.flaticon.com/icons/png/512/174/174857.png" alt="LinkedIn" width="24" height="24" class="icon"></a>
+            </div>
+        </div>
+        <div class="team-member">
+            <div class="team-member-header">
+                Neelesh Kumar Rana - 00225502722
+                <span class="arrow">&#9660;</span>
+            </div>
+            <div class="contact-info">
+                <a href="https://github.com/neelshkumarana"><img src="https://image.flaticon.com/icons/png/512/25/25231.png" alt="GitHub" width="24" height="24" class="icon"></a>
+                <a href="https://www.linkedin.com/in/neelesh-kumar-rana/"><img src="https://image.flaticon.com/icons/png/512/174/174857.png" alt="LinkedIn" width="24" height="24" class="icon"></a>
+            </div>
+        </div>
+    </div>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 150,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": { "value": "#999999" },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.4
+                },
+                "size": {
+                    "value": 3,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#999999",
+                    "opacity": 0.3,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2
+                }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 200,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        particlesJS("particles-segment", {
+            "particles": {
+                "number": {
+                    "value": 300,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": { "value": "#666666" },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.6
+                },
+                "size": {
+                    "value": 6,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#666666",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2
+                }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 200,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Smooth scrolling with easing function
+        document.querySelector('.button').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+        });
+
+        // Toggle contact info visibility
+        document.querySelectorAll('.team-member-header').forEach(header => {
+            header.addEventListener('click', function () {
+                const contactInfo = this.nextElementSibling;
+                const arrow = this.querySelector('.arrow');
+                arrow.classList.toggle('open');
+                if (arrow.classList.contains('open')) {
+                    contactInfo.classList.add('open');
+                } else {
+                    contactInfo.classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
